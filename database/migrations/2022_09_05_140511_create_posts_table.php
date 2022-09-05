@@ -17,7 +17,7 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->string('title', 250);
             $table->text('content');
-            $table->string('slug', 250);
+            $table->string('slug', 250)->unique();
             $table->timestamps();
         });
     }
@@ -32,3 +32,4 @@ class CreatePostsTable extends Migration
         Schema::dropIfExists('posts');
     }
 }
+

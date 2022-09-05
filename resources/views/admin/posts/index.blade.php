@@ -1,5 +1,9 @@
 @extends('layouts.dashboard')
 
+@section('page_title')
+    Admin | Post
+@endsection
+
 @section('content')
     <h1>Lista Post</h1>
 

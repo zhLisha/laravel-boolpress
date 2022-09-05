@@ -1,5 +1,10 @@
 @extends('layouts.dashboard')
 
+@section('page_title')
+    Admin | Dettagli Post
+@endsection
+
+
 @section('content')
     <h1> {{ $post->title }} </h1>
 
