@@ -1921,7 +1921,9 @@ var staticRenderFns = [function () {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div", [_c("a", {
+  return _c("div", {
+    staticClass: "container"
+  }, [_c("a", {
     attrs: {
       href: "/admin"
     }
