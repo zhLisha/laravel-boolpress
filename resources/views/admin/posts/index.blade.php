@@ -11,7 +11,8 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $post->title }}</h5>
                         <p class="card-text">{{ $post->content }}</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <a href="{{ route('admin.posts.show', ['post' => $post->id]) }}" class="btn btn-primary">Vedi dettagli</a>
+                        <a href="#" class="btn btn-warning">Modifica</a>
                     </div>
                 </div>
             </div>
