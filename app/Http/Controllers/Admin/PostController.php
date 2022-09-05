@@ -43,13 +43,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate($this->getValidationRules());
+
         $form_data = $request->all();
 
         $new_post = new Post();
 
         $new_post->title = $form_data['title'];
         $new_post->content = $form_data['content'];
-        $new_post->slug = Str::slug($new_post->title , '-');
+
+        $new_post->slug = $this->getIncreasedSlug($new_post->title);
 
         $new_post->save();
 
@@ -106,5 +109,30 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    protected function getIncreasedSlug($title) {
+        $save_new_slug = Str::slug($title , '-');
+        $base_slug = $save_new_slug ;
+        $find_existing_slug = Post::where('slug', '=', $save_new_slug)->first();
+
+        $counter = 1;
+
+        while($find_existing_slug) {
+            $save_new_slug = $base_slug . '-' . $counter;
+
+            $find_existing_slug = Post::where('slug', '=', $save_new_slug)->first();
+
+            $counter++;
+        };
+
+        return $save_new_slug;
+    }
+
+    public function getValidationRules() {
+        return [
+            'title' => 'required | max:250',
+            'content' => 'required | max:60000'
+        ];
     }
 }
