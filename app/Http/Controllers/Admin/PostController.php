@@ -14,12 +14,16 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $posts = Post::all();
+        $page_request = $request->all();
+        // dd($page_request);
+        $deleted_post = isset($page_request['deleted']) ? $page_request['deleted'] : null;
 
         $data = [
-            'posts' => $posts
+            'posts' => $posts,
+            'deleted' => $deleted_post
         ];
 
         return view('admin.posts.index', $data);
@@ -128,9 +132,16 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-       
+        $post_to_delete = Post::findOrFail($id);
+        $post_to_delete->delete();
+
+        return redirect()->route('admin.posts.index', ['deleted' => 'yes']);
     }
 
+
+    // ************************
+    // Function
+    // ************************
     protected function getIncreasedSlug($title) {
         $save_new_slug = Str::slug($title , '-');
         $base_slug = $save_new_slug ;

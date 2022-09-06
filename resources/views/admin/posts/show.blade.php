@@ -24,4 +24,11 @@
         <h2>Contenuto</h2>
         <span> {{ $post->content }}</span>
     </div>
+
+    <form action="{{route('admin.posts.destroy', ['post' => $post->id])}}" method="post">
+        @csrf
+        @method('DELETE')
+
+        <button type="submit" class="btn btn-danger mt-4"  onclick="return confirm('Sicuro di voler cancellare il post? ')">Elimina post</button>
+    </form>
 @endsection
