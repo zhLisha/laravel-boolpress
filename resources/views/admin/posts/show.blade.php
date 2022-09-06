@@ -9,11 +9,11 @@
     <h1> {{ $post->title }} </h1>
 
     <div class="created-at mt-3">
-        <span>Creato il: {{ $post->created_at }}</span>
+        <span>Creato il: {{ $post->created_at->translatedFormat('j F Y') }}</span>
     </div>
 
     <div class="updated-at">
-        <span>Aggiornato il: {{ $post->updated_at }}</span>
+        <span>Aggiornato il: {{ $post->updated_at->translatedFormat('j F Y') }}</span>
     </div>
 
     <div class="slug">
