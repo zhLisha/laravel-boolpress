@@ -22,7 +22,7 @@
                             <span>Aggiornato il: {{ $post->updated_at }}</span>
                         </div>
                         <a href="{{ route('admin.posts.show', ['post' => $post->id]) }}" class="btn btn-primary">Vedi dettagli</a>
-                        <a href="#" class="btn btn-warning">Modifica</a>
+                        <a href="{{ route('admin.posts.edit', ['post' => $post->id]) }}" class="btn btn-warning">Modifica</a>
                     </div>
                 </div>
             </div>
