@@ -101,9 +101,11 @@ class PostController extends Controller
     public function edit($id)
     {
         $form_data = Post::findOrFail($id);
+        $categories = Category::all();
 
         $data = [
-            'post' => $form_data
+            'post' => $form_data,
+            'categories' => $categories
         ];
 
         return view('admin.posts.edit', $data);
@@ -121,16 +123,22 @@ class PostController extends Controller
         $request->validate($this->getValidationRules());
 
         $post_to_update = Post::findOrFail($id);
-        $form_data = $request->all();
         
+        $form_data = $request->all();
 
+      
         if($post_to_update->title !== $form_data['title']) {
             $form_data['slug'] = $this->getIncreasedSlug($form_data['title']);
         } else {
             $form_data['slug'] = $post_to_update->slug;
         }
 
+        $post_to_update->category_id =  $form_data['category_id'];
+
         $post_to_update->update($form_data);
+
+        
+        // dd($post_to_update);
 
         return redirect()->route('admin.posts.show', ['post' => $post_to_update->id]);
     }

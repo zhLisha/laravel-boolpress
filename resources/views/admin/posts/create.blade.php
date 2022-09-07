@@ -35,7 +35,7 @@
             <div class="alert alert-danger">Categoria non trovata, riprova</div>
         @enderror
 
-          {{-- Inserisci contenuto post --}}
+        {{-- Inserisci contenuto post --}}
         <div class="mb-3">
             <label for="content" class="form-label">Contenuto</label>
             <textarea name="content" id="content" class="form-control @error('content') is-invalid @enderror" rows="10"> {{ old('content') }}</textarea>
