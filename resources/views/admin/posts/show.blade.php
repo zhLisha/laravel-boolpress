@@ -20,6 +20,14 @@
         <span>SLUG: {{ $post->slug }}</span>
     </div>
 
+    <div class="category">
+        @if($post->category)
+            <span>Categoria: {{ $post->category->title  }}</span>
+        @else 
+            <span>Categoria: Nessuna</span>
+        @endif
+    </div>
+
     <div class="content mt-5">
         <h2>Contenuto</h2>
         <span> {{ $post->content }}</span>
