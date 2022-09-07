@@ -63,6 +63,7 @@ class PostController extends Controller
 
         $new_post->title = $form_data['title'];
         $new_post->content = $form_data['content'];
+        $new_post->category_id = $form_data['category_id'];
 
         $new_post->slug = $this->getIncreasedSlug($new_post->title);
 
@@ -173,7 +174,8 @@ class PostController extends Controller
     public function getValidationRules() {
         return [
             'title' => 'required | max:250',
-            'content' => 'required | max:60000'
+            'content' => 'required | max:60000',
+            'category_id' => 'nullable | exists:categories,id'
         ];
     }
 }

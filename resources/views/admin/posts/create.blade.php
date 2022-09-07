@@ -20,7 +20,20 @@
             <div class="alert alert-danger">Titolo non inserito</div>
         @enderror
 
-       
+        {{-- Selezione categoria post --}}
+        <div class="mb-3">
+            <label for="category_id"></label>
+            <select class="form-select form-control @error('category_id') is-invalid @enderror" name="category_id" id="category_id" aria-label="Default select example">\
+                <option value="">Nessuna</option>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}> {{ $category->title }} </option>
+                @endforeach
+            </select>
+        </div>
+
+        @error('category_id')
+            <div class="alert alert-danger">Categoria non trovata, riprova</div>
+        @enderror
 
           {{-- Inserisci contenuto post --}}
         <div class="mb-3">
