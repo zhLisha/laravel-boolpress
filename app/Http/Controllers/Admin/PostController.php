@@ -41,9 +41,11 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $tags = Tag::all();
 
         $data = [
-            'categories' => $categories
+            'categories' => $categories,
+            'tags' => $tags
         ];
 
         return view('admin.posts.create', $data);
@@ -71,6 +73,10 @@ class PostController extends Controller
 
         $new_post->save();
 
+        // dd($form_data);
+
+        $new_post->tags()->sync($form_data['tags']);
+
         return redirect()->route('admin.posts.show', ['post' => $new_post->id]);
     }
 
@@ -92,8 +98,6 @@ class PostController extends Controller
             'post' => $post,
             'tags' => $tags
         ];
-
-        // dd($post->category);
 
         return view('admin.posts.show', $data);
     }
@@ -158,6 +162,7 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post_to_delete = Post::findOrFail($id);
+        $post_to_delete->tags()->sync([]);
         $post_to_delete->delete();
 
         return redirect()->route('admin.posts.index', ['deleted' => 'yes']);
