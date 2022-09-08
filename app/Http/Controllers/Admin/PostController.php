@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
+use App\Tag;
 use App\Category;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -19,6 +20,7 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $posts = Post::all();
+
         $page_request = $request->all();
         // dd($page_request);
         $deleted_post = isset($page_request['deleted']) ? $page_request['deleted'] : null;
@@ -81,10 +83,14 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::findOrFail($id);
+        $tags = Tag::all();
+
+        // dd($tags);
         $translate_date = Carbon::setlocale('it-IT');
 
         $data = [
             'post' => $post,
+            'tags' => $tags
         ];
 
         // dd($post->category);
