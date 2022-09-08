@@ -32,6 +32,28 @@
             </select>
         </div>
 
+            {{-- Checkbox for Tags --}}
+        <div class="tags-form">
+            <span>Scegli tags</span>
+            {{-- {{dd($post->tags)}} --}}
+            @foreach ($tags as $tag)
+            {{-- {{dd($tag->id)}} --}}
+                <div class="form-check mb-3">
+                    <input 
+                    class="form-check-input" 
+                    type="checkbox" 
+                    value="{{ $tag->id }}" 
+                    id="tag-{{ $tag->id }}" 
+                    name="tags[]" 
+                    {{ $post->tags->contains($tag->id) ? 'checked' : '' }}
+                    >
+                    <label class="form-check-label" for="tag-{{ $tag->id }}">
+                        {{$tag->name}}
+                    </label>
+                </div>
+            @endforeach
+        </div>
+
         {{-- Inserisci Contenuto  --}}
         <div class="mb-3">
             <label for="content" class="form-label">Contenuto</label>

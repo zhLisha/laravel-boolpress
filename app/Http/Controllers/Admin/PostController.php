@@ -91,7 +91,6 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $tags = Tag::all();
 
-        // dd($tags);
         $translate_date = Carbon::setlocale('it-IT');
 
         $data = [
@@ -112,10 +111,12 @@ class PostController extends Controller
     {
         $form_data = Post::findOrFail($id);
         $categories = Category::all();
+        $tags = Tag::all();
 
         $data = [
             'post' => $form_data,
-            'categories' => $categories
+            'categories' => $categories,
+            'tags' => $tags
         ];
 
         return view('admin.posts.edit', $data);
@@ -148,7 +149,12 @@ class PostController extends Controller
         $post_to_update->update($form_data);
 
         
-        // dd($post_to_update);
+        if(isset($form_data['tags'])) {
+            $post_to_update->tags()->sync($form_data['tags']);
+        } 
+        else {
+            $post_to_update->tags()->sync([]);
+        }
 
         return redirect()->route('admin.posts.show', ['post' => $post_to_update->id]);
     }
