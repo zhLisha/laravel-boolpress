@@ -1,6 +1,7 @@
 <template>
     <section>
         <h2>{{ pageTitle }}</h2>
+        <!-- Cards -->
         <div class="row row-cols-3">
             <div v-for="post in posts" :key="post.id" class="col mt-4"> 
                 <div class="card">
@@ -13,6 +14,27 @@
                 </div>
             </div>
         </div>
+
+        <!-- Pagination number -->
+        <nav aria-label="Page navigation example" class="mt-4">
+            <ul class="pagination">
+
+                <!-- Previous Page-->
+                <li class="page-item" :class="{'disabled': currentPage == firstPage}">
+                    <a class="page-link" href="#" @click="getApiPosts(currentPage - 1)">Previous</a>
+                </li>
+                
+                <!-- Pagination number -->
+                <li v-for="n in lastPage" :key="n" class="page-item" :class="{'active': n === currentPage}">
+                    <a class="page-link" @click="getApiPosts(n)" href="#">{{n}}</a>
+                </li>
+
+                <!-- Next Page -->
+                <li class="page-item" :class="{'disabled': currentPage == lastPage}">
+                    <a class="page-link"  @click="getApiPosts(currentPage + 1)" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
     </section>
 </template>
 
@@ -26,22 +48,31 @@ export default {
     data() {
         return {
             pageTitle: 'Lista dei post',
-            posts: []
+            posts: [],
+            currentPage: 1,
+            lastPage: null,
+            firstPage: 1
         };
     },
 
     methods: {
-       getApiPosts() {
-            axios.get('/api/posts')
+       getApiPosts(pageNumber) {
+            axios.get('/api/posts', {
+                params: {
+                    page: pageNumber
+                }
+            })
             .then((response) => {
-                this.posts = response.data.results;
+                this.posts = response.data.results.data;
+                this.currentPage = response.data.results.current_page;
+                this.lastPage = response.data.results.last_page;
             });
        },
 
-    //    Cut text content if > then 70
+    //    Cut text content if > then 60
        cutText(content) {
-            if(content.length > 70) {
-                return content.slice(0, 70) + '...';
+            if(content.length > 60) {
+                return content.slice(0, 60) + '...';
             }
 
             return content;
@@ -49,7 +80,7 @@ export default {
     },
 
     mounted() {
-        this.getApiPosts();
+        this.getApiPosts(1);
     }
 }
 

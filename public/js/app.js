@@ -1916,28 +1916,37 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       pageTitle: 'Lista dei post',
-      posts: []
+      posts: [],
+      currentPage: 1,
+      lastPage: null,
+      firstPage: 1
     };
   },
   methods: {
-    getApiPosts: function getApiPosts() {
+    getApiPosts: function getApiPosts(pageNumber) {
       var _this = this;
 
-      axios.get('/api/posts').then(function (response) {
-        _this.posts = response.data.results;
+      axios.get('/api/posts', {
+        params: {
+          page: pageNumber
+        }
+      }).then(function (response) {
+        _this.posts = response.data.results.data;
+        _this.currentPage = response.data.results.current_page;
+        _this.lastPage = response.data.results.last_page;
       });
     },
-    //    Cut text content if > then 70
+    //    Cut text content if > then 60
     cutText: function cutText(content) {
-      if (content.length > 70) {
-        return content.slice(0, 70) + '...';
+      if (content.length > 60) {
+        return content.slice(0, 60) + '...';
       }
 
       return content;
     }
   },
   mounted: function mounted() {
-    this.getApiPosts();
+    this.getApiPosts(1);
   }
 });
 
@@ -2001,7 +2010,62 @@ var render = function render() {
         href: "#"
       }
     }, [_vm._v("Clicca per vedere il post")])])])]);
-  }), 0)]);
+  }), 0), _vm._v(" "), _c("nav", {
+    staticClass: "mt-4",
+    attrs: {
+      "aria-label": "Page navigation example"
+    }
+  }, [_c("ul", {
+    staticClass: "pagination"
+  }, [_c("li", {
+    staticClass: "page-item",
+    "class": {
+      disabled: _vm.currentPage == _vm.firstPage
+    }
+  }, [_c("a", {
+    staticClass: "page-link",
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.getApiPosts(_vm.currentPage - 1);
+      }
+    }
+  }, [_vm._v("Previous")])]), _vm._v(" "), _vm._l(_vm.lastPage, function (n) {
+    return _c("li", {
+      key: n,
+      staticClass: "page-item",
+      "class": {
+        active: n === _vm.currentPage
+      }
+    }, [_c("a", {
+      staticClass: "page-link",
+      attrs: {
+        href: "#"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.getApiPosts(n);
+        }
+      }
+    }, [_vm._v(_vm._s(n))])]);
+  }), _vm._v(" "), _c("li", {
+    staticClass: "page-item",
+    "class": {
+      disabled: _vm.currentPage == _vm.lastPage
+    }
+  }, [_c("a", {
+    staticClass: "page-link",
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.getApiPosts(_vm.currentPage + 1);
+      }
+    }
+  }, [_vm._v("Next")])])], 2)])]);
 };
 
 var staticRenderFns = [];
