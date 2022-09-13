@@ -1,6 +1,6 @@
 <template>
     <section>
-        <h2>{{ pageTitle }}</h2>
+        <h3>{{ pageTitle }}</h3>
         <!-- Cards -->
         <div class="row row-cols-3">
             <div v-for="post in posts" :key="post.id" class="col mt-4"> 
