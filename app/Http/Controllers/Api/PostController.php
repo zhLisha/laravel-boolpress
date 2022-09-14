@@ -21,8 +21,7 @@ class PostController extends Controller
 
     public function show($slug) {
         $details = Post::where('slug', '=', $slug)->with(['tags', 'category'])->first();
-        // dd($details);
-        
+
         if($details) {
             $data = [
                 'success' => true,
