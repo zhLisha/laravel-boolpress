@@ -3,15 +3,8 @@
         <h3>{{ pageTitle }}</h3>
         <!-- Cards -->
         <div class="row row-cols-3">
-            <div v-for="post in posts" :key="post.id" class="col mt-4"> 
-                <div class="card">
-                    <!-- <img src="..." class="card-img-top" alt="..."> -->
-                    <div class="card-body">
-                        <h5 class="card-title">{{ post.title }}</h5>
-                        <p class="card-text">{{ cutText(post.content) }}</p>
-                        <a href="#" class="btn btn-primary">Clicca per vedere il post</a>
-                    </div>
-                </div>
+            <div v-for="singlePost in posts" :key="singlePost.id" class="col mt-4"> 
+                <PostsCard :post="singlePost" />
             </div>
         </div>
 
@@ -40,10 +33,13 @@
 
 <script>
 import Axios from 'axios';
-
+import PostsCard from '../components/PostsCard.vue';
 
 export default {
     name: 'Posts',
+    components: {
+        PostsCard
+    },
 
     data() {
         return {
@@ -68,15 +64,6 @@ export default {
                 this.lastPage = response.data.results.last_page;
             });
        },
-
-    //    Cut text content if > then 60
-       cutText(content) {
-            if(content.length > 60) {
-                return content.slice(0, 60) + '...';
-            }
-
-            return content;
-       }
     },
 
     mounted() {
