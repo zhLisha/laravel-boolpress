@@ -40,7 +40,7 @@
                 <span> {{ $tag->name }} {{!$loop->last ? ',' : ''}}</span>
             @endforeach
         @else
-            <span>Categoria: Nessuna</span>
+            <span>Tag: Nessuno</span>
         @endif
 
     </div>

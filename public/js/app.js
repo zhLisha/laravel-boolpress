@@ -2085,7 +2085,7 @@ __webpack_require__.r(__webpack_exports__);
   name: 'SinglePost',
   data: function data() {
     return {
-      details: ""
+      details: null
     };
   },
   methods: {

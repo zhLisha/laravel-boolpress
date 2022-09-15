@@ -39,7 +39,7 @@ export default {
     name: 'SinglePost',
     data() {
         return {
-            details: ""
+            details: null
         };
     },
 
