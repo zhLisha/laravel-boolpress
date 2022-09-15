@@ -45,6 +45,11 @@
 
     </div>
 
+    {{-- Image --}}
+    @if ($post->cover)
+        <img src="{{ asset('storage/' . $post->cover) }}" alt="{{ $post->title }}">
+    @endif
+
     {{-- Content --}}
     <div class="content mt-5">
         <h2>Contenuto</h2>

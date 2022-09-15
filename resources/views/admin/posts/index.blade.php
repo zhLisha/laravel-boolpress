@@ -17,7 +17,9 @@
        @foreach ($posts->reverse() as $post)
             <div class="col mt-4"> 
                 <div class="card">
-                    {{-- <img src="..." class="card-img-top" alt="..."> --}}
+                    @if ($post->cover)
+                        <img src="{{ asset('storage/' . $post->cover) }}" alt="{{ $post->title }}">
+                     @endif
                     <div class="card-body">
                         <h5 class="card-title">{{ $post->title }}</h5>
                         {{-- <p class="card-text">{{ $post->content }}</p>

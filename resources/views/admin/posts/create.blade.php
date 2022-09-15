@@ -8,7 +8,7 @@
 
     <h1>Crea un nuovo post</h1>
 
-    <form action="{{ route('admin.posts.store') }}" method="post">
+    <form action="{{ route('admin.posts.store') }}" method="post" enctype="multipart/form-data">
         @csrf
 
         {{-- Post title --}}
@@ -58,6 +58,12 @@
                     </label>
                 </div>
             @endforeach
+        </div>
+
+        {{-- File Image --}}
+        <div class="mb-3">
+            <label for="image" class="form-label">Large file input example</label>
+            <input class="form-control form-control-lg" id="image" type="file" name="image">
         </div>
 
         {{-- Post Content --}}

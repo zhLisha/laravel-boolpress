@@ -9,6 +9,7 @@ use App\Tag;
 use App\Category;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -20,7 +21,7 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $posts = Post::all();
-
+// dd($posts);
         $page_request = $request->all();
         // dd($page_request);
         $deleted_post = isset($page_request['deleted']) ? $page_request['deleted'] : null;
@@ -63,17 +64,21 @@ class PostController extends Controller
 
         $form_data = $request->all();
 
+        if(isset($form_data['image'])) {
+            $img_path = Storage::put('post-covers', $form_data['image']);
+            $form_data['cover'] =  $img_path;
+        };
+
         $new_post = new Post();
 
         $new_post->title = $form_data['title'];
         $new_post->content = $form_data['content'];
         $new_post->category_id = $form_data['category_id'];
+        $new_post->cover = $form_data['cover'];
 
         $new_post->slug = $this->getIncreasedSlug($new_post->title);
 
         $new_post->save();
-
-        // dd($form_data);
 
         $new_post->tags()->sync($form_data['tags']);
 
@@ -91,6 +96,7 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $tags = Tag::all();
 
+        // dd($tags);
         $translate_date = Carbon::setlocale('it-IT');
 
         $data = [
