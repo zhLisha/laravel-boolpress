@@ -143,7 +143,18 @@ class PostController extends Controller
         
         $form_data = $request->all();
 
-      
+        if(isset($form_data['image'])) {
+            if($post_to_update->cover) {
+                // Cancello l'immagine precedente se e' gia' presente 
+                Storage::delete($post_to_update->cover);
+            }
+
+            $img_path = Storage::put('post-covers', $form_data['image']);
+            $form_data['cover'] =  $img_path;
+            $post_to_update->cover = $form_data['cover'];
+        };
+// dd($form_data);
+    
         if($post_to_update->title !== $form_data['title']) {
             $form_data['slug'] = $this->getIncreasedSlug($form_data['title']);
         } else {
@@ -151,6 +162,7 @@ class PostController extends Controller
         }
 
         $post_to_update->category_id =  $form_data['category_id'];
+        
 
         $post_to_update->update($form_data);
 
@@ -175,6 +187,11 @@ class PostController extends Controller
     {
         $post_to_delete = Post::findOrFail($id);
         $post_to_delete->tags()->sync([]);
+
+        if($post_to_delete->cover) {
+            Storage::delete($post_to_delete->cover);
+        }
+
         $post_to_delete->delete();
 
         return redirect()->route('admin.posts.index', ['deleted' => 'yes']);
@@ -206,7 +223,8 @@ class PostController extends Controller
         return [
             'title' => 'required | max:250',
             'content' => 'required | max:60000',
-            'category_id' => 'nullable | exists:categories,id'
+            'category_id' => 'nullable | exists:categories,id',
+            'cover' => 'nullable | max:1024 |image'
         ];
     }
 }

@@ -8,7 +8,7 @@
 
     <h1>Modifica post</h1>
 
-    <form action="{{ route('admin.posts.update', ['post' => $post->id]) }}" method="post">
+    <form action="{{ route('admin.posts.update', ['post' => $post->id]) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -53,6 +53,13 @@
                 </div>
             @endforeach
         </div>
+
+        {{-- File Image --}}
+        <div class="mb-3">
+            <label for="image" class="form-label">Inserisci immagine copertina</label>
+            <input class="form-control form-control-lg" id="image" type="file" name="image">
+        </div>
+
 
         {{-- Inserisci Contenuto  --}}
         <div class="mb-3">

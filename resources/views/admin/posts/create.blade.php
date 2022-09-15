@@ -62,7 +62,7 @@
 
         {{-- File Image --}}
         <div class="mb-3">
-            <label for="image" class="form-label">Large file input example</label>
+            <label for="image" class="form-label">Inserisci immagine copertina</label>
             <input class="form-control form-control-lg" id="image" type="file" name="image">
         </div>
 
