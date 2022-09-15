@@ -9,14 +9,19 @@
                         <span>
                             <strong>Cateogoria: </strong>
                         </span>
-                        <span v-for="item in details" :key="item.id" class="badge rounded-pill bg-success text-dark mr-2">{{item.title}}</span>
+                        <span v-for="item, index in details" :key="index" class="badge rounded-pill bg-success text-dark mr-2">{{item.title}}</span>
                     </div>
                     <div class="tags" v-if="details.tags.length > 0">
                         <span>
                             <strong>Tags: </strong>
                         </span>
-                        <span v-for="item in details.tags" :key="item.id" class="badge rounded-pill bg-info text-dark mr-2"> {{item.name}}</span>
+                        <span v-for="item, index in details.tags" :key="index" class="badge rounded-pill bg-info text-dark mr-2"> {{item.name}}</span>
                     </div>
+                </div>
+
+                <!-- Image -->
+                <div class="image">
+                    <img v-if="details.cover" :src="details.cover" :alt="details.title">
                 </div>
 
                 <div class="content">
@@ -34,7 +39,7 @@ export default {
     name: 'SinglePost',
     data() {
         return {
-            details: null
+            details: ""
         };
     },
 

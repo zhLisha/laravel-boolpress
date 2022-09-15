@@ -2085,7 +2085,7 @@ __webpack_require__.r(__webpack_exports__);
   name: 'SinglePost',
   data: function data() {
     return {
-      details: null
+      details: ""
     };
   },
   methods: {
@@ -2300,7 +2300,13 @@ var render = function render() {
 
   return _c("div", {
     staticClass: "card"
-  }, [_c("div", {
+  }, [_vm.post.cover ? _c("img", {
+    staticClass: "card-img-top",
+    attrs: {
+      src: _vm.post.cover,
+      alt: _vm.post.title
+    }
+  }) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "card-body"
   }, [_c("h5", {
     staticClass: "card-title"
@@ -2470,19 +2476,26 @@ var render = function render() {
     staticClass: "category-tags"
   }, [_vm.details.category ? _c("div", {
     staticClass: "category"
-  }, [_vm._m(0), _vm._v(" "), _vm._l(_vm.details, function (item) {
+  }, [_vm._m(0), _vm._v(" "), _vm._l(_vm.details, function (item, index) {
     return _c("span", {
-      key: item.id,
+      key: index,
       staticClass: "badge rounded-pill bg-success text-dark mr-2"
     }, [_vm._v(_vm._s(item.title))]);
   })], 2) : _vm._e(), _vm._v(" "), _vm.details.tags.length > 0 ? _c("div", {
     staticClass: "tags"
-  }, [_vm._m(1), _vm._v(" "), _vm._l(_vm.details.tags, function (item) {
+  }, [_vm._m(1), _vm._v(" "), _vm._l(_vm.details.tags, function (item, index) {
     return _c("span", {
-      key: item.id,
+      key: index,
       staticClass: "badge rounded-pill bg-info text-dark mr-2"
     }, [_vm._v(" " + _vm._s(item.name))]);
   })], 2) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "image"
+  }, [_vm.details.cover ? _c("img", {
+    attrs: {
+      src: _vm.details.cover,
+      alt: _vm.details.title
+    }
+  }) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "content"
   }, [_c("p", [_vm._v(_vm._s(_vm.details.content))])])]) : _vm._e()])]);
 };
