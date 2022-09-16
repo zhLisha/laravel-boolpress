@@ -2060,7 +2060,9 @@ __webpack_require__.r(__webpack_exports__);
       userName: '',
       userEmail: '',
       userMessage: '',
-      sentMessage: false
+      sentMessage: false,
+      errors: {},
+      errorSubmit: false
     };
   },
   methods: {
@@ -2072,10 +2074,17 @@ __webpack_require__.r(__webpack_exports__);
         email: this.userEmail,
         message: this.userMessage
       }).then(function (response) {
-        _this.sentMessage = true;
-        _this.userName = '';
-        _this.userEmail = '';
-        _this.userMessage = '';
+        if (response.data.success !== false) {
+          _this.sentMessage = true;
+          _this.userName = '';
+          _this.userEmail = '';
+          _this.userMessage = '';
+        } else {
+          _this.errors = response.data.errors;
+          _this.errorSubmit = true;
+        }
+
+        console.log(response);
       });
     }
   }
@@ -2488,7 +2497,27 @@ var render = function render() {
         _vm.userName = $event.target.value;
       }
     }
-  })]), _vm._v(" "), _c("div", {
+  })]), _vm._v(" "), _vm.errorSubmit ? _c("div", _vm._l(_vm.errors.name, function (error, index) {
+    return _c("div", {
+      key: index,
+      staticClass: "alert alert-danger d-flex align-items-center",
+      attrs: {
+        role: "alert"
+      }
+    }, [_c("svg", {
+      staticClass: "bi flex-shrink-0 me-2",
+      attrs: {
+        width: "24",
+        height: "24",
+        role: "img",
+        "aria-label": "Danger:"
+      }
+    }, [_c("use", {
+      attrs: {
+        "xlink:href": "#exclamation-triangle-fill"
+      }
+    })]), _vm._v(" "), _c("div", [_c("span", [_vm._v(_vm._s(error))])])]);
+  }), 0) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "mb-3"
   }, [_c("label", {
     staticClass: "form-label",
@@ -2517,7 +2546,27 @@ var render = function render() {
         _vm.userEmail = $event.target.value;
       }
     }
-  })]), _vm._v(" "), _c("div", {
+  })]), _vm._v(" "), _vm.errorSubmit ? _c("div", _vm._l(_vm.errors.email, function (error, index) {
+    return _c("div", {
+      key: index,
+      staticClass: "alert alert-danger d-flex align-items-center",
+      attrs: {
+        role: "alert"
+      }
+    }, [_c("svg", {
+      staticClass: "bi flex-shrink-0 me-2",
+      attrs: {
+        width: "24",
+        height: "24",
+        role: "img",
+        "aria-label": "Danger:"
+      }
+    }, [_c("use", {
+      attrs: {
+        "xlink:href": "#exclamation-triangle-fill"
+      }
+    })]), _vm._v(" "), _c("div", [_c("span", [_vm._v(_vm._s(error))])])]);
+  }), 0) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "mb-3"
   }, [_c("label", {
     staticClass: "form-label",
@@ -2545,7 +2594,27 @@ var render = function render() {
         _vm.userMessage = $event.target.value;
       }
     }
-  })]), _vm._v(" "), _c("input", {
+  })]), _vm._v(" "), _vm.errorSubmit ? _c("div", _vm._l(_vm.errors.message, function (error, index) {
+    return _c("div", {
+      key: index,
+      staticClass: "alert alert-danger d-flex align-items-center",
+      attrs: {
+        role: "alert"
+      }
+    }, [_c("svg", {
+      staticClass: "bi flex-shrink-0 me-2",
+      attrs: {
+        width: "24",
+        height: "24",
+        role: "img",
+        "aria-label": "Danger:"
+      }
+    }, [_c("use", {
+      attrs: {
+        "xlink:href": "#exclamation-triangle-fill"
+      }
+    })]), _vm._v(" "), _c("div", [_c("span", [_vm._v(_vm._s(error))])])]);
+  }), 0) : _vm._e(), _vm._v(" "), _c("input", {
     staticClass: "btn btn-primary",
     attrs: {
       type: "submit"
