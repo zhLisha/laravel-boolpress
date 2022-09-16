@@ -2076,6 +2076,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         if (response.data.success !== false) {
           _this.sentMessage = true;
+          _this.errorSubmit = false;
           _this.userName = '';
           _this.userEmail = '';
           _this.userMessage = '';
@@ -2083,8 +2084,6 @@ __webpack_require__.r(__webpack_exports__);
           _this.errors = response.data.errors;
           _this.errorSubmit = true;
         }
-
-        console.log(response);
       });
     }
   }

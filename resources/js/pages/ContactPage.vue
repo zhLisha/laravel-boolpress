@@ -86,6 +86,7 @@ export default {
             .then((response) => {
                 if(response.data.success !== false) {
                     this.sentMessage = true;
+                    this.errorSubmit = false;
                     
                     this.userName = '';
                     this.userEmail = '';
@@ -94,8 +95,6 @@ export default {
                     this.errors = response.data.errors;
                     this.errorSubmit = true
                 }
-
-                console.log(response);
             })
         }
     }
